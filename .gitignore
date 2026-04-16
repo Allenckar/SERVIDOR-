@@ -22,3 +22,108 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+import java.util.*;
+
+// Interface que define habilidades
+interface Habilidade {
+    void usar();
+}
+
+// Classe abstrata base
+abstract class Personagem {
+    protected String nome;
+    protected int nivel;
+    protected int energia;
+
+    public Personagem(String nome) {
+        this.nome = nome;
+        this.nivel = 1;
+        this.energia = 100;
+    }
+
+    public void subirNivel() {
+        nivel++;
+        energia += 20;
+        System.out.println(nome + " subiu para o nível " + nivel + "!");
+    }
+
+    public abstract void agir();
+}
+
+// Classe concreta com herança
+class Programador extends Personagem implements Habilidade {
+
+    private List<String> linguagens = new ArrayList<>();
+
+    public Programador(String nome) {
+        super(nome);
+    }
+
+    public void aprenderLinguagem(String linguagem) {
+        linguagens.add(linguagem);
+        System.out.println(nome + " aprendeu " + linguagem);
+    }
+
+    @Override
+    public void usar() {
+        System.out.println(nome + " está usando suas habilidades de programação...");
+    }
+
+    @Override
+    public void agir() {
+        System.out.println(nome + " está resolvendo problemas complexos...");
+        if (linguagens.isEmpty()) {
+            System.out.println("Nenhuma linguagem conhecida!");
+        } else {
+            System.out.println("Linguagens conhecidas: " + linguagens);
+        }
+    }
+}
+
+// Classe de exceção personalizada
+class BugException extends Exception {
+    public BugException(String mensagem) {
+        super(mensagem);
+    }
+}
+
+// Sistema principal
+public class SistemaMundo {
+
+    private static Random random = new Random();
+
+    public static void main(String[] args) {
+        Programador dev = new Programador("Jordan");
+
+        dev.aprenderLinguagem("Java");
+        dev.aprenderLinguagem("Python");
+
+        dev.usar();
+        dev.agir();
+
+        simularDesafios(dev);
+    }
+
+    public static void simularDesafios(Programador dev) {
+        for (int i = 0; i < 3; i++) {
+            try {
+                enfrentarBug(dev);
+                dev.subirNivel();
+            } catch (BugException e) {
+                System.out.println("⚠️ Bug encontrado: " + e.getMessage());
+                System.out.println("🔧 Corrigindo bug...");
+            }
+        }
+        System.out.println("🏁 Jornada finalizada!");
+    }
+
+    public static void enfrentarBug(Programador dev) throws BugException {
+        int chance = random.nextInt(10);
+
+        if (chance < 5) {
+            throw new BugException("Erro crítico no sistema!");
+        } else {
+            System.out.println(dev.nome + " resolveu um desafio com sucesso!");
+        }
+    }
+}
