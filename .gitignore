@@ -22,3 +22,122 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+# Programa simples de gerenciamento de tarefas
+
+class Tarefa:
+    def __init__(self, titulo, concluida=False):
+        self.titulo = titulo
+        self.concluida = concluida
+
+    def marcar_como_concluida(self):
+        self.concluida = True
+
+    def __str__(self):
+        status = "✔" if self.concluida else "✘"
+        return f"[{status}] {self.titulo}"
+
+
+class ListaDeTarefas:
+    def __init__(self):
+        self.tarefas = []
+
+    def adicionar_tarefa(self, titulo):
+        tarefa = Tarefa(titulo)
+        self.tarefas.append(tarefa)
+
+    def listar_tarefas(self):
+        if not self.tarefas:
+            print("Nenhuma tarefa encontrada.")
+        for i, tarefa in enumerate(self.tarefas, start=1):
+            print(f"{i}. {tarefa}")
+
+    def concluir_tarefa(self, indice):
+        try:
+            self.tarefas[indice - 1].marcar_como_concluida()
+        except IndexError:
+            print("Índice inválido.")
+
+
+# Execução do programa
+if __name__ == "__main__":
+    lista = ListaDeTarefas()
+    lista.adicionar_tarefa("Estudar Python")
+    lista.adicionar_tarefa("Fazer exercício")
+    lista.adicionar_tarefa("Ler um livro")
+
+    print("Lista de tarefas:")
+    lista.listar_tarefas()
+
+    print("\nConcluindo a segunda tarefa...\n")
+    lista.concluir_tarefa(2)
+
+    print("Lista atualizada:")
+    lista.listar_tarefas()// Classe principal
+public class Main {
+    public static void main(String[] args) {
+        ListaDeTarefas lista = new ListaDeTarefas();
+
+        lista.adicionarTarefa("Estudar Java");
+        lista.adicionarTarefa("Praticar programação");
+        lista.adicionarTarefa("Ler um livro");
+
+        System.out.println("Lista de tarefas:");
+        lista.listarTarefas();
+
+        System.out.println("\nConcluindo a segunda tarefa...\n");
+        lista.concluirTarefa(1);
+
+        System.out.println("Lista atualizada:");
+        lista.listarTarefas();
+    }
+}
+
+// Classe Tarefa
+class Tarefa {
+    private String titulo;
+    private boolean concluida;
+
+    public Tarefa(String titulo) {
+        this.titulo = titulo;
+        this.concluida = false;
+    }
+
+    public void concluir() {
+        this.concluida = true;
+    }
+
+    public String toString() {
+        return (concluida ? "[✔] " : "[✘] ") + titulo;
+    }
+}
+
+// Classe Lista de Tarefas
+class ListaDeTarefas {
+    private java.util.ArrayList<Tarefa> tarefas;
+
+    public ListaDeTarefas() {
+        tarefas = new java.util.ArrayList<>();
+    }
+
+    public void adicionarTarefa(String titulo) {
+        tarefas.add(new Tarefa(titulo));
+    }
+
+    public void listarTarefas() {
+        if (tarefas.isEmpty()) {
+            System.out.println("Nenhuma tarefa encontrada.");
+        } else {
+            for (int i = 0; i < tarefas.size(); i++) {
+                System.out.println((i + 1) + ". " + tarefas.get(i));
+            }
+        }
+    }
+
+    public void concluirTarefa(int indice) {
+        if (indice >= 0 && indice < tarefas.size()) {
+            tarefas.get(indice).concluir();
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+}
